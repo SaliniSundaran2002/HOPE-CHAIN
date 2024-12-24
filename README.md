@@ -2,7 +2,7 @@
 
 # Decentralized Charity Platform
 
-## Overview
+### Overview
 
 The **Decentralized Charity Platform** is a blockchain-based application that enables transparent and secure donations to various campaigns. Built with React for the frontend and Hardhat for smart contract development, this platform allows administrators to create campaigns, set target donation amounts, and manage the activation status of campaigns.
 
