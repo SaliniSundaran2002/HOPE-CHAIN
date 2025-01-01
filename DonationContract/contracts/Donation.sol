@@ -84,4 +84,8 @@ function getAllDonations() external view returns (DonationRecord[] memory) {
     function getCampaignCount() external view returns (uint256) {
         return campaigns.length;
     }
+    
+    function getAllCampaigns() external view returns (Campaign[] memory){
+        return campaigns;
+    }
 }

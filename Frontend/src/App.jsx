@@ -1,21 +1,21 @@
 import React from 'react'
-import { ethers } from 'ethers'
-import Homepage from './pages/Homepage';
-import Background from './components/Background';
-import Footer from './components/Footer';
-// import ABI from '../../ignition/deployments/chain-31337/artifacts/DonationModule#Donation.json'
-// import address from '../../ignition/deployments/chain-31337/deployed_addresses.json'
+import {BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import AddCampaigns from './pages/AddCampaigns'
+import HomePage from './pages/HomePage'
+import ViewCamapigns from './pages/ViewCamapigns'
 
 const App = () => {
-  return(
+  return (
+    <Router>
     <div>
-      <Background>
-      <Homepage/>
-      </Background>
-      <Footer/>
+      <HomePage/>
+      <Routes>
+      <Route path='/add'element={<AddCampaigns/>} /> 
+      <Route path='/view'element={<ViewCamapigns/>} /> 
+      </Routes>
     </div>
+    </Router>
   )
 }
-
 
 export default App
