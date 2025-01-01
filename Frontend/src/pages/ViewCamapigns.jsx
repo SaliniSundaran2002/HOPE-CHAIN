@@ -18,7 +18,7 @@ const ViewCampaigns = () => {
                 // console.log("instance: ", inst);
                 
                 const txReceipt = await instance.getAllCampaigns();
-                console.log("receipt", txReceipt);
+                // console.log("receipt", txReceipt);
                 setOutput(txReceipt);
             } catch (error) {
                 console.log(error);

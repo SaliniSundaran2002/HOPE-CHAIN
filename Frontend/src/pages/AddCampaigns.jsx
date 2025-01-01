@@ -17,16 +17,16 @@ const AddCampaigns = () => {
             const cAbi = ABI.abi
             const cAddress = address['DonationModule#Donation'];           
             const instance = new ethers.Contract(cAddress,cAbi,signer);
-            console.log("ethers", ethers);
+            // console.log("ethers", ethers);
             
             const txReceipt = await instance.createCampaign(formData.name,formData.targetAmount);
-            console.log("receipt", txReceipt);   
+            // console.log("receipt", txReceipt);   
         }
 
         async function handleChange(event) {
             const {name, value} = event.target;
             setFormdata((prevState)=>({...prevState, [name]:value}));
-            console.log(formData);
+            // console.log(formData);
             
             
             
