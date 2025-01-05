@@ -54,4 +54,33 @@ describe("Donation Contract", function () {
         const finalBalance = await ethers.provider.getBalance(admin.address);
         expect(finalBalance).to.be.gt(initialBalance);
     });
+
+    it("should allow only admin to withdraw funds", async function () {
+        // Add campaign, raise funds, etc.
+        // Ensure that only the admin can call the withdraw function
+        await expect(contract.connect(nonAdmin).withdrawCampaignFunds(0))
+            .to.be.revertedWith("Only admin can perform this action");
+    });
+
+    it("should not allow withdrawal if funds are already withdrawn", async function () {
+        // Call withdraw once
+        await contract.connect(admin).withdrawCampaignFunds(0);
+        
+        // Attempt to withdraw again
+        await expect(contract.connect(admin).withdrawCampaignFunds(0))
+            .to.be.revertedWith("Funds already withdrawn for this campaign");
+    });
+
+    it("should withdraw funds correctly", async function () {
+        const initialBalance = await ethers.provider.getBalance(admin);
+
+        // Assuming campaign with ID 0 exists and has funds
+        await contract.connect(admin).withdrawCampaignFunds(0);
+
+        const finalBalance = await ethers.provider.getBalance(admin);
+        const fundsToWithdraw = ethers.utils.parseEther("10"); // Example amount
+
+        // Verify that the admin's balance has increased by the withdrawn amount
+        expect(finalBalance.sub(initialBalance)).to.equal(fundsToWithdraw);
+    });
 });

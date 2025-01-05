@@ -1,19 +1,28 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import {ethers} from 'ethers'
 
 const Header = () => {
-    async function connectMetamask() {
-        const provider = new ethers.BrowserProvider(window.ethereum);
-        const signer = await provider.getSigner();
-        alert(`${signer.address} is successfully logged in `);
-    }
+    
   return (
-    <div className='flex justify-between mt-8 '>
-        <button onClick={connectMetamask} className='bg-blue-500 p-4 justify-center text-white rounded-lg'>Connect Metamask</button>
-        <Link to='add' className='bg-green-500 p-4 justify-center text-white rounded-lg'>Add Camapign</Link>
-        <Link to='view' className='bg-yellow-500 p-4 justify-center text-white rounded-lg'>View Camapign</Link>
-    </div>
+<nav className="bg-blue-500 p-4">
+      <ul className="flex justify-center space-x-8">
+        <li>
+          <Link to="/home" className="text-white hover:text-gray-300">Home</Link>
+        </li>
+        <li>
+          <Link to="/add" className="text-white hover:text-gray-300">Add Campaign</Link>
+        </li>
+        <li>
+          <Link to="/view" className="text-white hover:text-gray-300">View Campaigns</Link>
+        </li>
+        <li>
+          <Link to="/withdraw" className="text-white hover:text-gray-300">Withdraw Funds</Link>
+        </li>
+        <li>
+          <Link to="/allDonations" className="text-white hover:text-gray-300">All Donations</Link>
+        </li>
+      </ul>
+    </nav>
   )
 }
 

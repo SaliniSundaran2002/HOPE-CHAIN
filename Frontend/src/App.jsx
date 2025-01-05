@@ -1,21 +1,38 @@
-import React from 'react'
-import {BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import AddCampaigns from './pages/AddCampaigns'
-import HomePage from './pages/HomePage'
-import ViewCamapigns from './pages/ViewCamapigns'
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import AddCampaigns from './components/AddCampaigns';
+import HomePage from './components/HomePage';
+import ViewCamapigns from './components/ViewCamapigns';
+import WithdrawFunds from './components/WithdrawFunds';
+import AllDonations from './components/AllDonations';
+import Index from './components/Index';
+import Header from './components/Header';
+import Footer from './components/Footer';
 
 const App = () => {
   return (
     <Router>
-    <div>
-      <HomePage/>
-      <Routes>
-      <Route path='/add'element={<AddCampaigns/>} /> 
-      <Route path='/view'element={<ViewCamapigns/>} /> 
-      </Routes>
-    </div>
-    </Router>
-  )
-}
+      <div>
+        <ToastContainer />
+        <Header/>
+        <Routes>
+          {/* Root Route */}
+          <Route path='/' element={<Index />} />
 
-export default App
+          {/* Home and Other Pages */}
+          <Route path='/home' element={<HomePage />} />
+          <Route path='/add' element={<AddCampaigns />} />
+          <Route path='/view' element={<ViewCamapigns />} />
+          <Route path='/withdraw' element={<WithdrawFunds />} />
+          <Route path='/allDonations' element={<AllDonations />} />
+
+        </Routes>
+        <Footer/>
+      </div>
+    </Router>
+  );
+};
+
+export default App;

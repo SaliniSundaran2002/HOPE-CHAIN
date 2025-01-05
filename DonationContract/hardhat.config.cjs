@@ -12,7 +12,7 @@ module.exports = {
     },
     sepolia:{
       url:`https://eth-sepolia.g.alchemy.com/v2/${process.env.API_KEY}`,
-      accounts:[process.env.PRIVATE_KEY]
+      accounts:[process.env.PRIVATEKEY]
     }
   }
 };
