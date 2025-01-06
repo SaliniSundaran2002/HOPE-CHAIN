@@ -3,6 +3,7 @@ import ABI from '../assets/Donation.json';
 import address from '../assets/deployed_addresses.json';
 import { ethers } from 'ethers';
 import { toast } from 'react-toastify';
+import Header from './Header';
 
 const AddCampaigns = () => {
   const [formData, setFormdata] = useState({
@@ -36,9 +37,11 @@ const AddCampaigns = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 flex items-center justify-center text-white p-4 sm:p-6 md:p-8">
-      <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl">
-        <h2 className="text-2xl font-bold text-center mb-6">Add a Campaign</h2>
+    <div>
+      <Header/>
+    <div className="min-h-screen flex items-center justify-center font-SourGummy p-4 sm:p-6 md:p-8">
+      <div className="p-8 rounded-lg shadow-lg w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl  border border-blue-400 " style={{ boxShadow: '0px 5px 15px rgba(37,99,235, 0.5)' }}> 
+        <h2 className="text-2xl font-bold text-center mb-6 text-cyan-900">Add a Campaign</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -47,19 +50,19 @@ const AddCampaigns = () => {
               type="text"
               name="name"
               id="name"
-              className="w-full p-4 border border-gray-600 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-4 border border-blue-600 rounded-lg  text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter campaign name"
               onChange={handleChange}
             />
           </div>
 
           <div>
-            <label htmlFor="targetAmount" className="block text-sm font-medium">Target Amount (ETH):</label>
+            <label htmlFor="targetAmount" className="block text-sm font-medium">Target Amount (Wei):</label>
             <input
               type="text"
               name="targetAmount"
               id="targetAmount"
-              className="w-full p-4 border border-gray-600 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-4 border border-blue-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter target amount in Wei"
               onChange={handleChange}
             />
@@ -75,6 +78,7 @@ const AddCampaigns = () => {
           </div>
         </form>
       </div>
+    </div>
     </div>
   );
 };

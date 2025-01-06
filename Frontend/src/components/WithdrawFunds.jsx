@@ -2,6 +2,7 @@ import React from 'react'
 import address from '../assets/deployed_addresses.json'
 import ABI from '../assets/Donation.json'
 import {ethers} from 'ethers'
+import Header from './Header'
 const WithdrawFunds = () => {
 const withdrawFund = async  () =>{
   const provider = new ethers.BrowserProvider(window.ethereum);
@@ -16,10 +17,13 @@ const withdrawFund = async  () =>{
 
 }
   return (
-<div className="flex items-center justify-center h-screen">
+    <div>
+      <Header/>
+<div className="flex items-center justify-center h-screen font-SourGummy">
   <button onClick={withdrawFund} className="px-6 py-3 bg-blue-500 text-white rounded-md hover:bg-blue-600">
     Withdraw All Funds
   </button>
+</div>
 </div>
 
   )

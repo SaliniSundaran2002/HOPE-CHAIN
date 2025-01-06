@@ -1,74 +1,54 @@
 import React from 'react';
-import bg1 from '../assets/images/bg.jpg'
-import bg2 from '../assets/images/bg1.jpeg'
+import bg from '../assets/images/bg1.jpg';
+import Header from './Header';
+
 const HomePage = () => {
   return (
-    <div className="flex flex-col items-center justify-center p-8 space-y-8">
+    <div>
+      <Header /> {/* Ensure the Header is here */}
+      
+      {/* Main Content Section */}
+      <div className="relative flex justify-center items-center ">
+      <div
+        className=" w-full w-fill h-64 p-6 shadow-lg overflow-hidden"
+        style={{
+          backgroundImage: `url(${bg})`, // Set the background image
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        <div className="absolute inset-0"></div> {/* Transparent dark overlay */}
 
-      <div className="quote-container">
-        <h2 className="text-xl font-semibold text-gray-800 italic animate-rotateQuote text-center sm:text-2xl md:text-3xl">
-          "The only limit to our realization of tomorrow is our doubts of today." - Franklin D. Roosevelt
-        </h2>
+{/* Box for the text on the left with gray background */}
+<div className="relative z-10  bg-black opacity-50 p-6 rounded-lg w-1/2 ml-4">
+  <h2 className="text-sm font-semibold text-white italic sm:text-xl md:text-xl font-mono text-center">
+  "Together, We Build Tomorrow"
+
+
+  </h2>
+</div>
+
       </div>
+    </div>
+    <div className="my-12 px-6">
+  <div className="bg-gray-100 p-8 rounded-lg shadow-lg max-w-4xl mx-auto mb-6">
+  <h2 className="text-3xl font-semibold text-cyan-800 mb-4 font-SourGummy">
+  Vision
+</h2>
 
-      {/* Sliding Images Section */}
-      <div className="overflow-hidden w-full">
-        <div className="flex animate-slideImages">
-          <img
-            src={bg1}
-            alt="Image 1"
-            className="w-auto h-auto mx-2 sm:w-48 md:w-64 lg:w-72"
-          />
-          <img
-          src={bg2}
-            alt="Image 2"
-            className="w-auto h-auto mx-2 sm:w-48 md:w-64 lg:w-72"
-          />
-          <img
-            src="https://via.placeholder.com/300/5733FF"
-            alt="Image 3"
-            className="w-auto h-auto mx-2 sm:w-48 md:w-64 lg:w-72"
-          />
-          <img
-            src="https://via.placeholder.com/300/33AFFF"
-            alt="Image 4"
-            className="w-auto h-auto mx-2 sm:w-48 md:w-64 lg:w-72"
-          />
-          <img
-            src="https://via.placeholder.com/300/FF33A2"
-            alt="Image 5"
-            className="w-auto h-auto mx-2 sm:w-48 md:w-64 lg:w-72"
-          />
-          <img
-            src="https://via.placeholder.com/300/FF9633"
-            alt="Image 6"
-            className="w-auto h-auto mx-2 sm:w-48 md:w-64 lg:w-72"
-          />
-          <img
-            src="https://via.placeholder.com/300/5733A2"
-            alt="Image 7"
-            className="w-auto h-auto mx-2 sm:w-48 md:w-64 lg:w-72"
-          />
-        </div>
-      </div>
+    <p className="text-lg text-gray-700 font-Lobster">
+      To create a world where everyone has access to the resources they need, regardless of their background, enabling a brighter future for all through collective compassion and support.
+    </p>
+  </div>
+  
+  <div className="bg-gray-100 p-8 rounded-lg shadow-lg max-w-4xl mx-auto">
+    <h2 className="text-3xl font-semibold text-cyan-800 mb-4 text-right font-SourGummy">Mission</h2>
+    <p className="text-lg text-gray-700 font-Lobster">
+      Our mission is to empower communities by connecting generous donors with impactful charity campaigns. We aim to provide a seamless platform for donations, ensuring transparency, trust, and positive change for those in need. Through collaboration and technology, we strive to make charity donations simple, secure, and impactful.
+    </p>
+  </div>
+</div>
 
-      {/* Add Tailwind Custom CSS */}
-      <style jsx>{`
-        
-        /* Slide images animation */
-        @keyframes slideImages {
-          0% {
-            transform: translateX(100%);
-          }
-          100% {
-            transform: translateX(-100%);
-          }
-        }
-
-        .animate-slideImages {
-          animation: slideImages 20s linear infinite;
-        }
-      `}</style>
     </div>
   );
 };

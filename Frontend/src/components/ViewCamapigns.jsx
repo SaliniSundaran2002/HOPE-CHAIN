@@ -3,11 +3,12 @@ import { ethers } from 'ethers';
 import ABI from '../assets/Donation.json';
 import address from '../assets/deployed_addresses.json';
 import { toast } from 'react-toastify';
+import Header from './Header';
 
 const ViewCampaigns = () => {
     const [output, setOutput] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [donationInfo, setDonationInfo] = useState([]); 
+    const [donationInfo, setDonationInfo] = useState([]);
     const [error, setError] = useState('');
     const [withdrawStatus, setWithdrawStatus] = useState({}); // Track withdrawal status for each campaign
 
@@ -58,7 +59,7 @@ const ViewCampaigns = () => {
             const contractABI = ABI.abi;
             const contract = new ethers.Contract(contractAddress, contractABI, signer);
             const campaigns = await contract.getAllCampaigns();
-        
+
             const campaignId = index;
             const donationName = campaigns[index].name;
             const donorName = donationInfo[index].donorName.trim();
@@ -68,14 +69,14 @@ const ViewCampaigns = () => {
                 setError('Please enter valid details (donor name and donation amount).');
                 return;
             }
-        
+
             const donationAmountInWei = ethers.parseEther(donationAmount);
             const tx = await contract.donate(campaignId, donationName, donorName, {
                 value: donationAmountInWei,
             });
-        
+
             await tx.wait();
-        
+
             toast.success(`Donation of ${donationAmount} ETH by ${donorName} successful!`);
             const newDonationInfo = [...donationInfo];
             newDonationInfo[index] = {
@@ -96,29 +97,29 @@ const ViewCampaigns = () => {
                 ...prevState,
                 [index]: 'Withdrawing...', // Set status to "Withdrawing..." when the withdrawal starts
             }));
-            
+
             const provider = new ethers.BrowserProvider(window.ethereum);
             const signer = await provider.getSigner();
             const contractAddress = address['DonationModule#Donation'];
             const contractABI = ABI.abi;
             const contract = new ethers.Contract(contractAddress, contractABI, signer);
-    
+
             const campaigns = await contract.getAllCampaigns();
             const campaignId = index;
-    
+
             const campaignDetails = campaigns[campaignId];
             if (!campaignDetails) {
                 throw new Error(`Campaign with ID ${campaignId} not found.`);
             }
-    
+
             const fundsRaised = ethers.formatEther(campaignDetails.fundsRaised);
             if (parseFloat(fundsRaised) === 0) {
                 throw new Error(`No funds available to withdraw .`);
             }
-    
+
             const tx = await contract.withdrawCampaignFunds(campaignId);
             await tx.wait();
-    
+
             setWithdrawStatus((prevState) => ({
                 ...prevState,
                 [index]: 'Funds withdrawn successfully!', // Update status on success
@@ -136,100 +137,103 @@ const ViewCampaigns = () => {
     };
 
     return (
-        <div className="px-4 sm:px-6 lg:px-8 py-6 bg-gray-900 min-h-screen">
-            <h2 className="text-3xl font-bold text-center mt-4 text-white">View Campaigns</h2>
-            
-            {error && <p className="text-red-500 text-center mt-2">{error}</p>}
+        <div>
+            <Header />
+            <div className="px-4 sm:px-6 lg:px-8 py-6  min-h-screen font-SourGummy">
+                <h2 className="text-3xl font-bold text-center mt-4 ">View Campaigns</h2>
 
-            <div className="mt-6 space-y-6">
-                {output.length > 0 ? (
-                    output.map((campaign, index) => {
-                        const targetAmount = campaign.targetAmount;  
-                        const fundsRaised = campaign.fundsRaised;   
-                        const progress = parseFloat(targetAmount) > 0 
-                            ? (parseFloat(fundsRaised) / parseFloat(targetAmount)) * 100 
-                            : 0;
+                {error && <p className="text-red-500 text-center mt-2">{error}</p>}
 
-                        return (
-                            <div key={index} className="bg-gray-800 p-6 rounded-lg shadow-md space-y-4">
-                                <p className="text-lg font-semibold text-white"><strong>Donation Name:</strong> {campaign.name}</p>
-                                <p className="text-sm text-gray-400"><strong>Target Amount:</strong> {parseInt(targetAmount)} Wei</p>
-                                <p className="text-sm text-gray-400"><strong>Funds Raised:</strong> {parseInt(fundsRaised)} Wei</p>
+                <div className="mt-6 space-y-6">
+                    {output.length > 0 ? (
+                        output.map((campaign, index) => {
+                            const targetAmount = campaign.targetAmount;
+                            const fundsRaised = campaign.fundsRaised;
+                            const progress = parseFloat(targetAmount) > 0
+                                ? (parseFloat(fundsRaised) / parseFloat(targetAmount)) * 100
+                                : 0;
 
-<p className="text-sm text-gray-400">
-  <strong>Balance Amount:</strong> 
-  {parseInt(targetAmount) - parseInt(fundsRaised)} Wei
-</p>
+                            return (
+                                <div key={index} className=" p-6 rounded-lg shadow-md space-y-4 " style={{ boxShadow: '0px 5px 15px rgba(37,99,235, 0.5)' }}>
+                                    <p className="text-lg font-semibold text-blue-600"><strong>Donation Name:</strong> {campaign.name}</p>
+                                    <p className="text-sm text-gray-900"><strong>Target Amount:</strong> {parseInt(targetAmount)} Wei</p>
+                                    <p className="text-sm text-gray-900"><strong>Funds Raised:</strong> {parseInt(fundsRaised)} Wei</p>
 
-                                <p className={`text-sm font-semibold ${campaign.active ? 'text-green-500' : 'text-red-500'}`}>
-                                    <strong>Status:</strong> {campaign.active ? 'Active' : 'Closed'}
-                                </p>
+                                    <p className="text-sm text-gray-9900">
+                                        <strong>Balance Amount:</strong>
+                                        {parseInt(targetAmount) - parseInt(fundsRaised)} Wei
+                                    </p>
 
-                                <div className="mt-2">
-                                    <div className="font-semibold text-white">Progress:</div>
-                                    <div className="h-2 w-full bg-gray-300 rounded-full">
-                                        <div
-                                            className="h-full rounded-full"
-                                            style={{
-                                                width: `${progress}%`,
-                                                backgroundColor: progress >= 100 ? 'green' : 'blue',
-                                            }}
-                                        ></div>
+                                    <p className={`text-sm font-semibold ${campaign.active ? 'text-green-500' : 'text-red-500'}`}>
+                                        <strong>Status:</strong> {campaign.active ? 'Active' : 'Closed'}
+                                    </p>
+
+                                    <div className="mt-2">
+                                        <div className="font-semibold text-white">Progress:</div>
+                                        <div className="h-2 w-full bg-gray-300 rounded-full">
+                                            <div
+                                                className="h-full rounded-full"
+                                                style={{
+                                                    width: `${progress}%`,
+                                                    backgroundColor: progress >= 100 ? 'red' : 'green',
+                                                }}
+                                            ></div>
+                                        </div>
+                                        <p className="text-center text-white mt-2">{Math.round(progress)}%</p>
                                     </div>
-                                    <p className="text-center text-white mt-2">{Math.round(progress)}%</p>
-                                </div>
 
-                                <div className="flex flex-wrap justify-between mt-2">
-                                    <button
-                                        onClick={() => handleDonate(index)}
-                                        className="bg-green-500 p-3 rounded-lg text-white hover:bg-green-400 w-full sm:w-auto"
-                                    >
-                                        Donate
-                                    </button>
-                                    <button
-                                        onClick={() => withdraw(index)}
-                                        className="bg-violet-500 p-3 rounded-lg text-white hover:bg-violet-400 w-full sm:w-auto mt-2"
-                                    >
-                                        Withdraw
-                                    </button>
-                                </div>
-
-                                {withdrawStatus[index] && (
-                                    <p className="text-center text-sm text-gray-300 mt-2">{withdrawStatus[index]}</p>
-                                )}
-
-                                {donationInfo[index] && (
-                                    <div className="mt-4 space-y-4">
-                                        <input
-                                            type="text"
-                                            placeholder="Donor Name"
-                                            value={donationInfo[index].donorName}
-                                            onChange={(e) => handleInputChange(index, 'donorName', e.target.value)}
-                                            className="border p-3 w-full rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500"
-                                        />
-                                        <input
-                                            type="number"
-                                            placeholder="Amount in ETH"
-                                            value={donationInfo[index].donationAmount}
-                                            onChange={(e) => handleInputChange(index, 'donationAmount', e.target.value)}
-                                            className="border p-3 w-full rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500"
-                                        />
+                                    <div className="flex flex-wrap justify-between mt-2">
                                         <button
-                                            onClick={() => handleSubmitDonation(index)}
-                                            className="bg-blue-500 p-3 rounded-lg text-white hover:bg-blue-400 w-full"
+                                            onClick={() => handleDonate(index)}
+                                            className="bg-green-500 p-3 rounded-lg text-white hover:bg-green-400 w-full sm:w-auto mt-2"
                                         >
-                                            Submit Donation
+                                            Donate
+                                        </button>
+                                        <button
+                                            onClick={() => withdraw(index)}
+                                            className="bg-blue-500 p-3 rounded-lg text-white hover:bg-blue-400 w-full sm:w-auto mt-2"
+                                        >
+                                            Withdraw
                                         </button>
                                     </div>
-                                )}
-                            </div>
-                        );
-                    })
-                ) : loading ? (
-                    <p className="text-center text-gray-500">Loading campaigns...</p>
-                ) : (
-                    <p className="text-center text-gray-500">No campaigns found.</p>
-                )}
+
+                                    {withdrawStatus[index] && (
+                                        <p className="text-center text-sm text-gray-300 mt-2">{withdrawStatus[index]}</p>
+                                    )}
+
+                                    {donationInfo[index] && (
+                                        <div className="mt-4 space-y-4">
+                                            <input
+                                                type="text"
+                                                placeholder="Donor Name"
+                                                value={donationInfo[index].donorName}
+                                                onChange={(e) => handleInputChange(index, 'donorName', e.target.value)}
+                                                className="border border-blue-500 p-3 w-full rounded-lg  text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500"
+                                            />
+                                            <input
+                                                type="number"
+                                                placeholder="Amount in ETH"
+                                                value={donationInfo[index].donationAmount}
+                                                onChange={(e) => handleInputChange(index, 'donationAmount', e.target.value)}
+                                                className="border border-blue-500 p-3 w-full rounded-lg  text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500"
+                                            />
+                                            <button
+                                                onClick={() => handleSubmitDonation(index)}
+                                                className="bg-blue-500 p-3 rounded-lg text-white hover:bg-blue-400 w-full"
+                                            >
+                                                Submit Donation
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                            );
+                        })
+                    ) : loading ? (
+                        <p className="text-center text-gray-500">Loading campaigns...</p>
+                    ) : (
+                        <p className="text-center text-gray-500">No campaigns found.</p>
+                    )}
+                </div>
             </div>
         </div>
     );

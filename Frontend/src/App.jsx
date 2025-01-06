@@ -8,7 +8,7 @@ import ViewCamapigns from './components/ViewCamapigns';
 import WithdrawFunds from './components/WithdrawFunds';
 import AllDonations from './components/AllDonations';
 import Index from './components/Index';
-import Header from './components/Header';
+// import Header from './components/Header';
 import Footer from './components/Footer';
 
 const App = () => {
@@ -16,7 +16,7 @@ const App = () => {
     <Router>
       <div>
         <ToastContainer />
-        <Header/>
+        {/* <Header/> */}
         <Routes>
           {/* Root Route */}
           <Route path='/' element={<Index />} />
@@ -29,7 +29,10 @@ const App = () => {
           <Route path='/allDonations' element={<AllDonations />} />
 
         </Routes>
+        <div className="mt-5">
         <Footer/>
+        </div>
+        
       </div>
     </Router>
   );

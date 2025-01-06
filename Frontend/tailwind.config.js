@@ -4,7 +4,13 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily:{
+        SourGummy:[ "Sour Gummy", "serif"],
+        BebasNeue: ["Bebas Neue", "serif"],
+        Lobster:["Lobster", "serif"],
+      }
+    },
   },
   plugins: [],
 }
