@@ -50,7 +50,7 @@ const AddCampaigns = () => {
               type="text"
               name="name"
               id="name"
-              className="w-full p-4 border border-blue-600 rounded-lg  text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-4 border border-blue-600 rounded-lg  focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter campaign name"
               onChange={handleChange}
             />
@@ -62,7 +62,7 @@ const AddCampaigns = () => {
               type="text"
               name="targetAmount"
               id="targetAmount"
-              className="w-full p-4 border border-blue-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-4 border border-blue-600 rounded-lg  focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter target amount in Wei"
               onChange={handleChange}
             />

@@ -140,7 +140,7 @@ const ViewCampaigns = () => {
         <div>
             <Header />
             <div className="px-4 sm:px-6 lg:px-8 py-6  min-h-screen font-SourGummy">
-                <h2 className="text-3xl font-bold text-center mt-4 ">View Campaigns</h2>
+                <h2 className="text-3xl font-bold text-center mt-4  text-cyan-800">View Campaigns</h2>
 
                 {error && <p className="text-red-500 text-center mt-2">{error}</p>}
 
@@ -156,31 +156,42 @@ const ViewCampaigns = () => {
                             return (
                                 <div key={index} className=" p-6 rounded-lg shadow-md space-y-4 " style={{ boxShadow: '0px 5px 15px rgba(37,99,235, 0.5)' }}>
                                     <p className="text-lg font-semibold text-blue-600"><strong>Donation Name:</strong> {campaign.name}</p>
-                                    <p className="text-sm text-gray-900"><strong>Target Amount:</strong> {parseInt(targetAmount)} Wei</p>
-                                    <p className="text-sm text-gray-900"><strong>Funds Raised:</strong> {parseInt(fundsRaised)} Wei</p>
 
-                                    <p className="text-sm text-gray-9900">
-                                        <strong>Balance Amount:</strong>
-                                        {parseInt(targetAmount) - parseInt(fundsRaised)} Wei
+                                    <p className="text-sm text-gray-900 "><strong className='mr-2'>Target Amount:</strong>
+
+                                        {ethers.formatEther(campaign.targetAmount)}({parseInt(targetAmount)} Wei)</p>
+
+
+                                    <p className="text-sm text-gray-900"><strong className='mr-6'>Funds Raised:</strong>
+
+                                        {ethers.formatEther(campaign.fundsRaised)}
+                                        ({parseInt(fundsRaised)} Wei)</p>
+
+                                    <p className="text-sm text-gray-900">
+                                        <strong className="mr-2">Balance Amount:</strong>
+                                        {Math.max(0, parseInt(targetAmount) - parseInt(fundsRaised))} Wei
                                     </p>
 
-                                    <p className={`text-sm font-semibold ${campaign.active ? 'text-green-500' : 'text-red-500'}`}>
+
+                                    <p className={`text-sm font-semibold ${campaign.active ? 'text-green-500' : 'text-red-500'} md:text-base`}>
                                         <strong>Status:</strong> {campaign.active ? 'Active' : 'Closed'}
                                     </p>
 
                                     <div className="mt-2">
-                                        <div className="font-semibold text-white">Progress:</div>
-                                        <div className="h-2 w-full bg-gray-300 rounded-full">
+                                        <div className="font-semibold text-white text-sm md:text-base">Progress:</div>
+                                        <div className="w-full bg-gray-300 rounded-full h-2 overflow-hidden">
                                             <div
-                                                className="h-full rounded-full"
+                                                className="h-full rounded-full transition-all duration-300"
                                                 style={{
                                                     width: `${progress}%`,
                                                     backgroundColor: progress >= 100 ? 'red' : 'green',
                                                 }}
                                             ></div>
                                         </div>
-                                        <p className="text-center text-white mt-2">{Math.round(progress)}%</p>
+                                        <p className="text-center text-cyan-800 mt-2 text-sm md:text-base">{Math.round(progress)}%</p>
                                     </div>
+
+
 
                                     <div className="flex flex-wrap justify-between mt-2">
                                         <button
@@ -198,7 +209,7 @@ const ViewCampaigns = () => {
                                     </div>
 
                                     {withdrawStatus[index] && (
-                                        <p className="text-center text-sm text-gray-300 mt-2">{withdrawStatus[index]}</p>
+                                        <p className="text-center text-sm text-cyan-900 mt-2">{withdrawStatus[index]}</p>
                                     )}
 
                                     {donationInfo[index] && (
@@ -208,14 +219,14 @@ const ViewCampaigns = () => {
                                                 placeholder="Donor Name"
                                                 value={donationInfo[index].donorName}
                                                 onChange={(e) => handleInputChange(index, 'donorName', e.target.value)}
-                                                className="border border-blue-500 p-3 w-full rounded-lg  text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500"
+                                                className="border border-blue-500 p-3 w-full rounded-lg   placeholder-gray-400 focus:ring-2 focus:ring-blue-500"
                                             />
                                             <input
                                                 type="number"
-                                                placeholder="Amount in ETH"
+                                                placeholder="Amount in Wei"
                                                 value={donationInfo[index].donationAmount}
                                                 onChange={(e) => handleInputChange(index, 'donationAmount', e.target.value)}
-                                                className="border border-blue-500 p-3 w-full rounded-lg  text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500"
+                                                className="border border-blue-500 p-3 w-full rounded-lg  placeholder-gray-400 focus:ring-2 focus:ring-blue-500"
                                             />
                                             <button
                                                 onClick={() => handleSubmitDonation(index)}

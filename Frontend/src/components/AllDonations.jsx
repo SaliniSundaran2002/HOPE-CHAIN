@@ -36,7 +36,7 @@ const AllDonations = () => {
                     return (
                         <div key={index} className="border border-blue-500 p-4 sm:p-6 rounded-lg shadow-lg mb-4">
                             <p className="text-base sm:text-lg font-semibold text-blue-600">
-                                <strong>Donor:</strong> {donation.donor}
+                                <strong>Donor Address:</strong> {donation.donor}
                             </p>
                             <p className="text-base sm:text-lg font-semibold text-blue-400">
                                 <strong>Donor Name:</strong> {donation.donorName}
