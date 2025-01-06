@@ -14,7 +14,7 @@ contract Donation {
         uint256 targetAmount;
         uint256 fundsRaised;
         bool active;
-        bool fundsWithdrawn; // New status to track if funds have been withdrawn
+        bool fundsWithdrawn; 
     }
 
     address public admin = 0xcB1510331F43409C66bbBe97A602CAaC146D7536; 
@@ -38,7 +38,7 @@ contract Donation {
 
     function createCampaign(string memory _name, uint256 _targetAmount) external onlyAdmin {
         require(_targetAmount > 0, "Target amount must be greater than 0");
-        campaigns.push(Campaign(_name, _targetAmount, 0, true, false)); // Initialize fundsWithdrawn as false
+        campaigns.push(Campaign(_name, _targetAmount, 0, true, false)); 
         uint256 campaignId = campaigns.length - 1;
 
         emit CampaignCreated(campaignId, _name, _targetAmount);
@@ -87,7 +87,7 @@ contract Donation {
         return campaigns;
     }
 
-    // Function to withdraw individual campaign funds by admin
+
     function withdrawCampaignFunds(uint256 _campaignId) external onlyAdmin {
         require(_campaignId < campaigns.length, "Campaign does not exist");
         Campaign storage campaign = campaigns[_campaignId];
@@ -95,14 +95,13 @@ contract Donation {
         require(!campaign.fundsWithdrawn, "Funds already withdrawn for this campaign");
 
         uint256 fundsToWithdraw = campaign.fundsRaised;
-        campaign.fundsRaised = 0; // Reset funds after withdrawal
-        campaign.fundsWithdrawn = true; // Mark funds as withdrawn
+        // campaign.fundsRaised = 0; 
+        campaign.fundsWithdrawn = true; 
 
         payable(admin).transfer(fundsToWithdraw);
-        emit FundsWithdrawn(admin, fundsToWithdraw, _campaignId); // Campaign specific withdrawal event
+        emit FundsWithdrawn(admin, fundsToWithdraw, _campaignId); 
     }
 
-    // Function to check if funds were withdrawn for a specific campaign
     function getCampaignWithdrawStatus(uint256 _campaignId) external view returns (bool) {
         require(_campaignId < campaigns.length, "Campaign does not exist");
         return campaigns[_campaignId].fundsWithdrawn;
