@@ -47,7 +47,9 @@
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/SaliniSundaran2002/HopeChain.git
+   git clone https://github.com/SaliniSundaran2002/HOPE-CHAIN.git
+
+   cd HOPE-CHAIN
 
 2. Install Dependencies
    ```bash
